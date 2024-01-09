@@ -73,7 +73,7 @@ else
         local typ = net.ReadUInt(2)
 
         if typ == 1 then
-            local ply = net.ReadPlayer()
+            local ply = net.ReadEntity()
             local rolled = net.ReadBool()
             local dur = net.ReadFloat()
 
@@ -138,12 +138,12 @@ else
             end
 
         elseif typ == 2 then
-            local ply = net.ReadPlayer()
+            local ply = net.ReadEntity()
             local newprog = net.ReadFloat()
 
             ply.HardLandingProg = newprog
         elseif typ == 3 then
-            local ply = net.ReadPlayer()
+            local ply = net.ReadEntity()
 
             ply.HardLandingEnabled = nil
             ply.HardLandingProg = nil
@@ -166,7 +166,7 @@ function pMeta:InitHardLanding(rolled, dur)
 
             net.Start("HLanding_NMSG")
             net.WriteUInt(1, 2)
-            net.WritePlayer(self)
+            net.WriteEntity(self)
             net.WriteBool(rolled)
             net.WriteFloat(dur)
             net.Broadcast()
@@ -187,7 +187,7 @@ function pMeta:InitHardLanding(rolled, dur)
 
                 net.Start("HLanding_NMSG")
                 net.WriteUInt(2, 2)
-                net.WritePlayer(self)
+                net.WriteEntity(self)
                 net.WriteFloat(self.HardLandingProg)
                 net.Broadcast()
 
@@ -206,7 +206,7 @@ function pMeta:InitHardLanding(rolled, dur)
 
             net.Start("HLanding_NMSG")
             net.WriteUInt(3, 2)
-            net.WritePlayer(self)
+            net.WriteEntity(self)
             net.Broadcast()
 
             return true
