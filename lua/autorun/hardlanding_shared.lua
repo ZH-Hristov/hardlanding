@@ -100,14 +100,14 @@ else
                     end)
 
                     while ply.HardLandingEnabled do
-                        LerpProg = math.Approach(LerpProg, 1, FrameTime() / 0.3)
+                        LerpProg = math.Approach(LerpProg, 1, FrameTime() / 0.2)
                         coroutine.yield()
                     end
 
                     View.drawviewer = false
 
                     while LerpProg > 0 do
-                        LerpProg = math.Approach(LerpProg, 0, FrameTime() / 0.3)
+                        LerpProg = math.Approach(LerpProg, 0, FrameTime() / 0.2)
                         coroutine.yield()
                     end
 
@@ -222,7 +222,7 @@ function pMeta:InitHardLanding(rolled, dur)
                 if ply ~= self then return end
 
                 if self.HardLandingProg then
-                    self:SetCycle( Lerp(0.1, self:GetCycle(), self.HardLandingProg * (rolled and 0.7 or 1)) )
+                    self:SetCycle( self.HardLandingProg * (rolled and 0.7 or 1) )
                 else
                     self:SetCycle(1)
                 end
