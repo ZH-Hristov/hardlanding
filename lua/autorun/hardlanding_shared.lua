@@ -164,6 +164,9 @@ function pMeta:InitHardLanding(rolled, dur)
             self.HardLandingEnabled = true
             self.HardLandingProg = 0
 
+            local rStartSpeed = 300
+            local rSpeed = rStartSpeed
+
             net.Start("HLanding_NMSG")
             net.WriteUInt(1, 2)
             net.WriteEntity(self)
@@ -192,7 +195,8 @@ function pMeta:InitHardLanding(rolled, dur)
                 net.Broadcast()
 
                 if rolled and self:IsOnGround() then
-                    self:SetLocalVelocity(self:GetForward() * 200)
+                    rSpeed = Lerp(math.ease.InSine(self.HardLandingProg), rStartSpeed, 0)
+                    self:SetLocalVelocity(self:GetForward() * rSpeed)
                 end
 
                 coroutine.yield()
