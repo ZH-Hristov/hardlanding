@@ -24,6 +24,7 @@ local hl_cvars = {
 }
 
 local immersivecamenabled = CreateClientConVar("hardlanding_immersivecam", 1, true, false, "Enable immersive camera while rolling or stunned. REQUIRES CVPS INSTALLED.", 0, 1)
+local immersivecamoffset = CreateClientConVar("hardlanding_immersivecam_offset", 2, true, false, "Forward offset when immersive cam is enabled and CVPS is installed.", 0, 1000)
 
 local function saveConfig()
     if CLIENT then return end
@@ -92,7 +93,7 @@ else
                     CalcViewPS.AddToTop("HARDLANDING_CVPS_CAM", function(ply, pos, angles, fov)
                         local att = LP:GetAttachment(attId)
 
-                        View.origin = LerpVector(ease.OutSine(LerpProg), pos, att.Pos)
+                        View.origin = LerpVector(ease.OutSine(LerpProg), pos, att.Pos + (att.Ang:Forward() * immersivecamoffset:GetFloat()))
                         View.angles = LerpAngle(ease.OutSine(LerpProg), angles, att.Ang)
                         View.fov = Lerp(ease.InOutSine(LerpProg), fov, fov + 20)
                 
